@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
-
 public class MainActivity extends ActionBarActivity {
 
     private ImageView mImageView;
@@ -25,6 +24,7 @@ public class MainActivity extends ActionBarActivity {
         assignHeightSpinner();
         assignImageSpinner();
         assignScaleSpinner();
+        assignAdjustSpinner();
     }
 
     private void assignHeightSpinner() {
@@ -34,6 +34,7 @@ public class MainActivity extends ActionBarActivity {
         adapter.add(defaultItem);
         adapter.add("WRAP_CONTENT");
         adapter.add("MATCH_PARENT");
+        adapter.add("200dp");
         Spinner spinner = (Spinner) findViewById(R.id.height_spinner);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -47,6 +48,8 @@ public class MainActivity extends ActionBarActivity {
                     height = RelativeLayout.LayoutParams.WRAP_CONTENT;
                 } else if (name.equals("MATCH_PARENT")) {
                     height = RelativeLayout.LayoutParams.MATCH_PARENT;
+                } else if (name.equals("200dp")) {
+                    height = 200;
                 }
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                         mImageView.getLayoutParams().width,
@@ -116,6 +119,36 @@ public class MainActivity extends ActionBarActivity {
                 String name = (String) spinner.getSelectedItem();
                 if (!name.equals(defaultItem)) {
                     mImageView.setScaleType(ImageView.ScaleType.valueOf(name));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void assignAdjustSpinner() {
+        final String defaultItem = "Change AdjustViewBounds";
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.add(defaultItem);
+        adapter.add("true");
+        adapter.add("false");
+        Spinner spinner = (Spinner) findViewById(R.id.adjust_spinner);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Spinner spinner = (Spinner) parent;
+                String name = (String) spinner.getSelectedItem();
+                if (name.equals(defaultItem)) return;
+
+                if (name.equals("true")) {
+                    mImageView.setAdjustViewBounds(true);
+                } else {
+                    mImageView.setAdjustViewBounds(false);
                 }
             }
 

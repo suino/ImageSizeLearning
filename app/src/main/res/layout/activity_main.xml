@@ -31,6 +31,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/height_spinner"/>
 
+            <Spinner
+                android:id="@+id/adjust_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/scale_spinner"/>
+
         </RelativeLayout>
 
     </ScrollView>
